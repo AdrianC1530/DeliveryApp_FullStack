@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import api from '../utils/api';
 import { useCart } from '../context/CartContext';
 import Layout from '../components/Layout';
+import { motion } from 'framer-motion';
 
 interface Product {
     id: number;
@@ -31,22 +32,38 @@ const Catalog = () => {
         fetchProducts();
     }, []);
 
+    const container = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
+    };
+
+    const item = {
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0 }
+    };
+
     return (
         <Layout>
-            <div className="mb-10 text-center">
-                <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent inline-block">
+            <div className="mb-12 text-center relative">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-primary/20 blur-[100px] -z-10"></div>
+                <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent inline-block tracking-tight">
                     Our Menu
                 </h2>
-                <p className="text-muted max-w-2xl mx-auto">
-                    Discover our selection of premium dishes, crafted with the finest ingredients for an unforgettable dining experience.
+                <p className="text-muted max-w-2xl mx-auto text-lg">
+                    Discover our selection of premium dishes, crafted with the finest ingredients.
                 </p>
             </div>
 
             {isLoading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <div key={i} className="card h-96 animate-pulse">
-                            <div className="w-full h-48 bg-white/5 rounded-lg mb-4"></div>
+                        <div key={i} className="glass rounded-2xl h-96 animate-pulse p-4">
+                            <div className="w-full h-48 bg-white/5 rounded-xl mb-4"></div>
                             <div className="h-6 bg-white/5 rounded w-3/4 mb-2"></div>
                             <div className="h-4 bg-white/5 rounded w-full mb-2"></div>
                             <div className="h-4 bg-white/5 rounded w-1/2"></div>
@@ -54,43 +71,53 @@ const Catalog = () => {
                     ))}
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                >
                     {products.map((product) => (
-                        <div key={product.id} className="card group overflow-hidden hover:border-primary/50 transition-all duration-300">
-                            <div className="relative h-56 -mx-8 -mt-8 mb-6 overflow-hidden">
+                        <motion.div
+                            key={product.id}
+                            variants={item}
+                            className="glass rounded-2xl overflow-hidden group hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10"
+                        >
+                            <div className="relative h-56 overflow-hidden">
                                 {product.imageUrl ? (
                                     <img
                                         src={product.imageUrl}
                                         alt={product.name}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
                                 ) : (
-                                    <div className="w-full h-full bg-white/5 flex items-center justify-center text-muted">
+                                    <div className="w-full h-full bg-surface flex items-center justify-center text-muted">
                                         No Image
                                     </div>
                                 )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-bg-card to-transparent opacity-60"></div>
-                                <div className="absolute bottom-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
-                                    <span className="text-primary font-bold">${product.price.toFixed(2)}</span>
+                                <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80"></div>
+                                <div className="absolute bottom-4 right-4 bg-surface/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 shadow-lg">
+                                    <span className="text-primary font-bold text-lg">${product.price.toFixed(2)}</span>
                                 </div>
                             </div>
 
-                            <div className="flex flex-col h-full">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{product.name}</h3>
-                                </div>
-                                <p className="text-muted text-sm mb-6 line-clamp-2 flex-grow">{product.description}</p>
+                            <div className="p-6">
+                                <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">{product.name}</h3>
+                                <p className="text-muted text-sm mb-6 line-clamp-2 leading-relaxed">{product.description}</p>
 
                                 <button
                                     onClick={() => addToCart({ ...product, quantity: 1 })}
-                                    className="w-full btn btn-secondary hover:bg-primary hover:text-white hover:border-primary transition-all group-hover:shadow-glow"
+                                    className="w-full bg-white/5 hover:bg-primary hover:text-white text-white border border-white/10 hover:border-primary rounded-xl py-3 font-semibold transition-all duration-300 flex items-center justify-center gap-2 group/btn"
                                 >
-                                    Add to Cart
+                                    <span>Add to Cart</span>
+                                    <svg className="w-5 h-5 transform group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                    </svg>
                                 </button>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             )}
         </Layout>
     );
