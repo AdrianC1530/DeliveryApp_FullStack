@@ -2,9 +2,9 @@
     "name": "delivery-backend",
     "version": "1.0.0",
     "description": "Backend API for Delivery System",
-    "main": "dist/app.js",
+    "main": "dist/src/app.js",
     "scripts": {
-        "start": "node dist/app.js",
+        "start": "node dist/src/app.js",
         "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
         "build": "tsc",
         "migrate": "prisma migrate deploy"
@@ -22,7 +22,7 @@
         "@types/cors": "^2.8.13",
         "@types/express": "^4.17.17",
         "@types/jsonwebtoken": "^9.0.1",
-        "@types/node": "^18.15.11",
+        "@types/node": "^18.19.130",
         "prisma": "^5.0.0",
         "ts-node-dev": "^2.0.0",
         "typescript": "^5.0.0"
