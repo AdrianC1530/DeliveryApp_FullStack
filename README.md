@@ -1,59 +1,105 @@
-# Delivery System
+# 🚀 DeliveryApp FullStack System
+### Una experiencia de delivery moderna, inmersiva y totalmente dockerizada.
 
-Sistema de Delivery completo, modular y dockerizado.
+![Delivery App Banner](https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80)
 
-## Estructura del Proyecto (Monorepo)
+Este proyecto representa un sistema integral de gestión de pedidos y delivery de última generación. Combina una arquitectura backend robusta con interfaces de usuario (Frontends) diseñadas bajo la estética **Glassmorphism** y **Magic UI**, ofreciendo una experiencia visual premium y fluida.
 
-- **/backend**: API REST (Node.js + Express + Prisma + PostgreSQL).
-- **/frontend-main**: Cliente Principal (React + TypeScript).
-- **/frontend-secondary**: Catálogo de Productos (Vue.js).
-- **docker-compose.yml**: Orquestación de contenedores.
+---
 
-## Requisitos Previos
+## 🌟 Características Destacadas
 
-- Docker y Docker Compose
-- Node.js (v18+)
-- npm
+### 🎨 Frontend Principal (Cliente)
+Una interfaz construida para impresionar y retener al usuario.
+- **Estética Glassmorphism**: Paneles translúcidos, desenfoques en tiempo real (backdrop-filter) y sombras suaves.
+- **Animaciones Fluidas**: Transiciones de página, micro-interacciones en botones y efectos de carga con **Framer Motion**.
+- **Diseño Responsivo**: Adaptable a cualquier dispositivo con **Tailwind CSS**.
+- **Gestión de Estado**: Carrito de compras en tiempo real y autenticación de usuarios.
 
-## Instrucciones de Ejecución Rápida
+### 🖥️ Frontend Secundario (Cocina/Admin)
+Un panel rápido y eficiente para la visualización de productos.
+- **Tecnología Vue.js**: Reactividad y ligereza para operaciones rápidas.
+- **Estilo Unificado**: Integración de Tailwind CSS para mantener la coherencia visual con la marca.
 
-1.  **Clonar el repositorio** (o descargar los archivos).
-2.  **Configurar variables de entorno**:
-    - El backend ya tiene valores por defecto en `docker-compose.yml` para desarrollo.
-3.  **Levantar la infraestructura**:
+### ⚙️ Backend Robusto
+El motor que impulsa la aplicación.
+- **API RESTful**: Endpoints seguros y bien estructurados.
+- **Seguridad**: Autenticación JWT y encriptación de contraseñas con Bcrypt.
+- **ORM Prisma**: Gestión eficiente y segura de la base de datos PostgreSQL.
+
+### 🐳 Infraestructura Dockerizada
+Despliegue en un solo comando.
+- **Contenedores Aislados**: Backend, Frontends y Base de Datos corriendo en armonía.
+- **Persistencia de Datos**: Volúmenes de Docker configurados para PostgreSQL.
+- **Red Interna**: Comunicación segura entre servicios.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+Este proyecto ha sido construido utilizando los estándares más altos de la industria:
+
+### Frontend
+- **React 18** (Main) & **Vue 3** (Secondary)
+- **TypeScript**: Tipado estático para código más seguro.
+- **Tailwind CSS**: Framework de utilidad para diseño rápido y moderno.
+- **Framer Motion**: Librería de animaciones para React.
+- **Vite**: Build tool de próxima generación.
+
+### Backend
+- **Node.js & Express**: Servidor rápido y escalable.
+- **Prisma ORM**: Capa de acceso a datos moderna.
+- **PostgreSQL**: Base de datos relacional robusta.
+- **JWT**: JSON Web Tokens para autenticación stateless.
+
+### DevOps
+- **Docker & Docker Compose**: Orquestación de contenedores.
+
+---
+
+## 🚀 Instalación y Uso
+
+### Prerrequisitos
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) instalado y corriendo.
+
+### Despliegue Rápido (Recomendado)
+
+1.  **Clonar el repositorio**:
+    ```bash
+    git clone https://github.com/AdrianC1530/DeliveryApp_FullStack.git
+    cd DeliveryApp_FullStack
+    ```
+
+2.  **Levantar la aplicación**:
+    Ejecuta el siguiente comando en la raíz del proyecto:
     ```bash
     docker-compose up --build
     ```
-    Esto levantará la base de datos y el backend.
+    *Este comando descargará las imágenes, construirá los contenedores, ejecutará las migraciones de base de datos y poblará la base de datos con datos de prueba (Seed).*
 
-4.  **Correr Frontends Localmente** (Opcional si no están dockerizados aún):
-    - **Frontend Main**:
-      ```bash
-      cd frontend-main
-      npm install
-      npm run dev
-      ```
-    - **Frontend Secondary**:
-      ```bash
-      cd frontend-secondary
-      npm install
-      npm run dev
-      ```
+3.  **Acceder a la Aplicación**:
+    - **Cliente Principal**: [http://localhost:5173](http://localhost:5173)
+    - **Panel Secundario**: [http://localhost:5174](http://localhost:5174)
+    - **API Backend**: [http://localhost:3000](http://localhost:3000)
 
-## Manual de Usuario (Flujo Básico)
+---
 
-1.  **Registro/Login**: Ingrese al Frontend Principal y cree una cuenta.
-2.  **Catálogo**: Navegue por los productos disponibles.
-3.  **Carrito**: Añada productos al carrito.
-4.  **Checkout**: Confirme su pedido.
-5.  **Seguimiento**: Vea el estado de su pedido en la sección de "Mis Pedidos".
+## 📄 Estructura del Proyecto
 
-## Manual Técnico
+```
+DeliveryApp_FullStack/
+├── 📂 backend/             # API Node.js + Express + Prisma
+├── 📂 frontend-main/       # Cliente React + Tailwind + Framer Motion
+├── 📂 frontend-secondary/  # Cliente Vue.js + Tailwind
+├── 📄 docker-compose.yml   # Configuración de servicios Docker
+└── 📄 README.md            # Documentación del proyecto
+```
 
-### Base de Datos
-- PostgreSQL corriendo en puerto 5432.
-- Prisma ORM gestiona el esquema en `backend/prisma/schema.prisma`.
+---
 
-### Comandos Útiles
-- `npx prisma migrate dev`: Crear nueva migración (desde `/backend`).
-- `npx prisma studio`: Ver datos de la BD (desde `/backend`).
+## 👤 Autor
+
+Hecho con ❤️ y ☕ por **Adrian Carrillo**.
+
+---
+*© 2025 DeliveryApp System. Todos los derechos reservados.*
