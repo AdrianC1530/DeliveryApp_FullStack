@@ -28,7 +28,7 @@ export const createOrder = async (req: AuthRequest, res: Response) => {
         });
         res.status(201).json(order);
     } catch (error) {
-        res.status(500).json({ message: 'Error creating order', error });
+        res.status(500).json({ message: 'Error al crear la orden', error });
     }
 };
 
@@ -42,7 +42,7 @@ export const getUserOrders = async (req: AuthRequest, res: Response) => {
         });
         res.json(orders);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching orders', error });
+        res.status(500).json({ message: 'Error al obtener las órdenes', error });
     }
 };
 
@@ -56,16 +56,16 @@ export const getOrderById = async (req: AuthRequest, res: Response) => {
         });
 
         if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
+            return res.status(404).json({ message: 'Orden no encontrada' });
         }
 
         // Check if order belongs to user or user is admin (logic simplified here)
         if (order.userId !== userId && req.user.role !== 'ADMIN') {
-            return res.status(403).json({ message: 'Access denied' });
+            return res.status(403).json({ message: 'Acceso denegado' });
         }
 
         res.json(order);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching order', error });
+        res.status(500).json({ message: 'Error al obtener la orden', error });
     }
 };

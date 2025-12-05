@@ -21,7 +21,7 @@ const Login = () => {
             login(response.data.token, response.data.user);
             navigate('/catalog');
         } catch (err) {
-            setError('Invalid credentials. Please try again.');
+            setError('Credenciales inválidas. Por favor intenta de nuevo.');
         } finally {
             setIsLoading(false);
         }
@@ -52,9 +52,9 @@ const Login = () => {
                             <span className="text-4xl">🚀</span>
                         </motion.div>
                         <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">
-                            Welcome Back
+                            Bienvenido
                         </h1>
-                        <p className="text-muted text-sm">Sign in to access your delivery dashboard</p>
+                        <p className="text-muted text-sm">Inicia sesión para acceder al panel de delivery</p>
                     </div>
 
                     {error && (
@@ -69,18 +69,18 @@ const Login = () => {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-300 ml-1">Email Address</label>
+                            <label className="text-sm font-medium text-gray-300 ml-1">Correo Electrónico</label>
                             <input
                                 type="email"
                                 className="w-full bg-surface/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-200"
-                                placeholder="name@example.com"
+                                placeholder="nombre@ejemplo.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-300 ml-1">Password</label>
+                            <label className="text-sm font-medium text-gray-300 ml-1">Contraseña</label>
                             <input
                                 type="password"
                                 className="w-full bg-surface/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-200"
@@ -106,9 +106,9 @@ const Login = () => {
                                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                             </svg>
-                                            Signing in...
+                                            Iniciando...
                                         </>
-                                    ) : 'Sign In'}
+                                    ) : 'Iniciar Sesión'}
                                 </span>
                             </div>
                         </motion.button>
@@ -116,7 +116,7 @@ const Login = () => {
 
                     <div className="mt-8 text-center">
                         <p className="text-sm text-muted">
-                            Don't have an account? <a href="#" className="text-primary hover:text-primary-hover font-medium transition-colors">Contact Admin</a>
+                            ¿No tienes una cuenta? <a href="#" className="text-primary hover:text-primary-hover font-medium transition-colors">Contactar Admin</a>
                         </p>
                     </div>
                 </div>

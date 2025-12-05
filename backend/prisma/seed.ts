@@ -41,7 +41,7 @@ async function main() {
             name: 'Hamburguesa de Pollo Crispy',
             description: 'Pechuga de pollo empanizada, lechuga, tomate y mayonesa.',
             price: 8.00,
-            imageUrl: 'https://images.unsplash.com/photo-1615297928064-24977384d0f9?auto=format&fit=crop&w=500&q=60',
+            imageUrl: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=500&q=60',
             stock: 40,
             category: 'Hamburguesas'
         },

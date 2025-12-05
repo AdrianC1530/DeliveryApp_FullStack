@@ -52,10 +52,10 @@ const Catalog = () => {
             <div className="mb-12 text-center relative">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-primary/20 blur-[100px] -z-10"></div>
                 <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent inline-block tracking-tight">
-                    Our Menu
+                    Nuestro Menú
                 </h2>
                 <p className="text-muted max-w-2xl mx-auto text-lg">
-                    Discover our selection of premium dishes, crafted with the finest ingredients.
+                    Descubre nuestra selección de platos premium, elaborados con los mejores ingredientes.
                 </p>
             </div>
 
@@ -92,7 +92,7 @@ const Catalog = () => {
                                     />
                                 ) : (
                                     <div className="w-full h-full bg-surface flex items-center justify-center text-muted">
-                                        No Image
+                                        Sin Imagen
                                     </div>
                                 )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80"></div>
@@ -109,7 +109,7 @@ const Catalog = () => {
                                     onClick={() => addToCart({ ...product, quantity: 1 })}
                                     className="w-full bg-white/5 hover:bg-primary hover:text-white text-white border border-white/10 hover:border-primary rounded-xl py-3 font-semibold transition-all duration-300 flex items-center justify-center gap-2 group/btn"
                                 >
-                                    <span>Add to Cart</span>
+                                    <span>Agregar al Carrito</span>
                                     <svg className="w-5 h-5 transform group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                     </svg>

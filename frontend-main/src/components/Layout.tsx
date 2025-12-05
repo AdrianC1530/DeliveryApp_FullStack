@@ -25,8 +25,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     <div className="flex items-center gap-8">
                         <div className="hidden md:flex items-center gap-6">
                             {[
-                                { path: '/catalog', label: 'Menu' },
-                                { path: '/orders', label: 'Orders' },
+                                { path: '/catalog', label: 'Menú' },
+                                { path: '/orders', label: 'Órdenes' },
                             ].map((link) => (
                                 <Link
                                     key={link.path}
@@ -70,7 +70,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                                 onClick={() => { logout(); navigate('/login'); }}
                                 className="text-sm font-medium text-red-400 hover:text-red-300 transition-colors hover:bg-red-400/10 px-3 py-1.5 rounded-lg"
                             >
-                                Sign Out
+                                Cerrar Sesión
                             </button>
                         </div>
                     </div>
@@ -92,12 +92,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <div className="container mx-auto px-4 py-8">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <div className="text-muted text-sm">
-                            &copy; {new Date().getFullYear()} DeliveryApp. All rights reserved.
+                            &copy; {new Date().getFullYear()} DeliveryApp. Todos los derechos reservados.
                         </div>
                         <div className="flex gap-6 text-sm text-muted">
-                            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                            <a href="#" className="hover:text-white transition-colors">Contact</a>
+                            <a href="#" className="hover:text-white transition-colors">Política de Privacidad</a>
+                            <a href="#" className="hover:text-white transition-colors">Términos de Servicio</a>
+                            <a href="#" className="hover:text-white transition-colors">Contacto</a>
                         </div>
                     </div>
                 </div>

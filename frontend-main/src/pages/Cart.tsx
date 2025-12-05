@@ -27,7 +27,7 @@ const Cart = () => {
         <Layout>
             <div className="mb-8">
                 <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent inline-block tracking-tight">
-                    Your Cart
+                    Tu Carrito
                 </h2>
             </div>
 
@@ -38,12 +38,12 @@ const Cart = () => {
                     className="text-center py-20 glass rounded-2xl border-dashed border-2 border-white/10"
                 >
                     <div className="text-7xl mb-6 animate-bounce">🛒</div>
-                    <p className="text-2xl text-muted mb-8">Your cart is empty</p>
+                    <p className="text-2xl text-muted mb-8">Tu carrito está vacío</p>
                     <button
                         onClick={() => navigate('/catalog')}
                         className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-xl font-semibold transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40"
                     >
-                        Browse Menu
+                        Ver Menú
                     </button>
                 </motion.div>
             ) : (
@@ -71,7 +71,7 @@ const Cart = () => {
                                             onClick={() => removeFromCart(item.id)}
                                             className="text-red-400 hover:text-red-300 text-sm font-medium transition-colors hover:bg-red-400/10 px-3 py-1 rounded-lg"
                                         >
-                                            Remove
+                                            Eliminar
                                         </button>
                                     </div>
                                 </motion.div>
@@ -86,7 +86,7 @@ const Cart = () => {
                             transition={{ delay: 0.2 }}
                             className="glass rounded-2xl p-6 sticky top-24"
                         >
-                            <h3 className="text-xl font-bold mb-6 border-b border-white/10 pb-4">Order Summary</h3>
+                            <h3 className="text-xl font-bold mb-6 border-b border-white/10 pb-4">Resumen de Orden</h3>
 
                             <div className="space-y-4 mb-8">
                                 <div className="flex justify-between text-muted">
@@ -94,7 +94,7 @@ const Cart = () => {
                                     <span>${total.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-muted">
-                                    <span>Delivery Fee</span>
+                                    <span>Envío</span>
                                     <span>$2.50</span>
                                 </div>
                                 <div className="flex justify-between text-2xl font-bold pt-4 border-t border-white/10">
@@ -109,14 +109,14 @@ const Cart = () => {
                                 onClick={handleCheckout}
                                 className="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:scale-[1.02] transition-all duration-200"
                             >
-                                Checkout Now
+                                Pagar Ahora
                             </button>
 
                             <button
                                 onClick={() => navigate('/catalog')}
                                 className="w-full mt-4 text-center text-sm text-muted hover:text-white transition-colors"
                             >
-                                Continue Shopping
+                                Seguir Comprando
                             </button>
                         </motion.div>
                     </div>

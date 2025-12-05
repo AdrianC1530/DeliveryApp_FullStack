@@ -7,8 +7,5 @@ import ProductCatalog from './components/ProductCatalog.vue'
 </template>
 
 <style>
-body {
-  margin: 0;
-  background-color: #f4f4f4;
-}
+/* Styles handled by Tailwind */
 </style>

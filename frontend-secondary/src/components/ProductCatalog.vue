@@ -23,15 +23,35 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="container">
-    <h1>Catálogo de Productos</h1>
-    <div class="grid">
-      <div v-for="product in products" :key="product.id" class="card">
-        <img v-if="product.imageUrl" :src="product.imageUrl" :alt="product.name" class="product-image" />
-        <div class="card-body">
-          <h2>{{ product.name }}</h2>
-          <p>{{ product.description }}</p>
-          <p class="price">\${{ product.price }}</p>
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+      Catálogo de Productos
+    </h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div v-for="product in products" :key="product.id" class="bg-surface rounded-2xl overflow-hidden shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1 border border-white/10 group">
+        <div class="relative h-56 overflow-hidden">
+          <img 
+            v-if="product.imageUrl" 
+            :src="product.imageUrl" 
+            :alt="product.name" 
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+          />
+          <div v-else class="w-full h-full bg-white/5 flex items-center justify-center text-muted">
+            Sin Imagen
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80"></div>
+        </div>
+        
+        <div class="p-6">
+          <h2 class="text-xl font-bold mb-2 text-white group-hover:text-primary transition-colors">{{ product.name }}</h2>
+          <p class="text-muted text-sm mb-4 line-clamp-2">{{ product.description }}</p>
+          <div class="flex justify-between items-center">
+            <span class="text-2xl font-bold text-primary">${{ product.price }}</span>
+            <button class="bg-white/10 hover:bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+              Ver Detalles
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -39,60 +59,5 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-}
-
-.product-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.card-body {
-  padding: 15px;
-}
-
-h2 {
-  font-size: 1.2rem;
-  margin: 0 0 10px;
-}
-
-p {
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.price {
-  color: #2c3e50;
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-top: 10px;
-}
+/* Styles handled by Tailwind */
 </style>

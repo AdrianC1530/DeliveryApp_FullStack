@@ -46,6 +46,16 @@ const OrderTracking = () => {
         }
     };
 
+    const getStatusText = (status: string) => {
+        switch (status) {
+            case 'PENDING': return 'PENDIENTE';
+            case 'PREPARING': return 'PREPARANDO';
+            case 'ON_WAY': return 'EN CAMINO';
+            case 'DELIVERED': return 'ENTREGADO';
+            default: return status;
+        }
+    };
+
     const container = {
         hidden: { opacity: 0 },
         show: {
@@ -65,9 +75,9 @@ const OrderTracking = () => {
         <Layout>
             <div className="mb-10">
                 <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent inline-block tracking-tight">
-                    Order History
+                    Historial de Órdenes
                 </h2>
-                <p className="text-muted mt-2 text-lg">Track your past and current orders</p>
+                <p className="text-muted mt-2 text-lg">Rastrea tus pedidos actuales y pasados</p>
             </div>
 
             {isLoading ? (
@@ -83,7 +93,7 @@ const OrderTracking = () => {
                     className="text-center py-20 glass rounded-2xl border-dashed border-2 border-white/10"
                 >
                     <div className="text-6xl mb-4">📦</div>
-                    <p className="text-xl text-muted">No orders found</p>
+                    <p className="text-xl text-muted">No se encontraron órdenes</p>
                 </motion.div>
             ) : (
                 <motion.div
@@ -104,21 +114,21 @@ const OrderTracking = () => {
                                         🧾
                                     </div>
                                     <div>
-                                        <span className="text-sm text-muted block">Order ID</span>
+                                        <span className="text-sm text-muted block">Orden ID</span>
                                         <span className="font-mono font-bold text-lg">#{order.id}</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <span className="text-sm text-muted block">Date</span>
+                                    <span className="text-sm text-muted block">Fecha</span>
                                     <span className="font-medium">{new Date(order.createdAt).toLocaleDateString()}</span>
                                 </div>
                                 <div>
-                                    <span className="text-sm text-muted block">Total Amount</span>
+                                    <span className="text-sm text-muted block">Total</span>
                                     <span className="font-bold text-primary text-xl">${order.total.toFixed(2)}</span>
                                 </div>
                                 <div>
                                     <span className={`px-4 py-1.5 rounded-full text-sm font-bold border ${getStatusColor(order.status)}`}>
-                                        {order.status.replace('_', ' ')}
+                                        {getStatusText(order.status)}
                                     </span>
                                 </div>
                             </div>
@@ -126,7 +136,7 @@ const OrderTracking = () => {
                             <div className="p-6 bg-surface/10">
                                 <h4 className="text-sm font-bold text-muted mb-4 uppercase tracking-wider flex items-center gap-2">
                                     <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                                    Items
+                                    Artículos
                                 </h4>
                                 <ul className="space-y-3">
                                     {order.items.map((item) => (
