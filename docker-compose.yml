@@ -5,11 +5,11 @@ services:
     image: postgres:15-alpine
     container_name: delivery_db
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
       POSTGRES_DB: delivery_db
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -21,14 +21,34 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=postgresql://user:password@db:5432/delivery_db?schema=public
+      - DATABASE_URL=postgresql://postgres:root@db:5432/delivery_db?schema=public
       - PORT=3000
       - JWT_SECRET=supersecretkey
     depends_on:
       - db
     networks:
       - delivery_network
-    command: sh -c "npx prisma migrate deploy && npm start"
+    command: sh -c "npx prisma migrate deploy && npx prisma db seed && npm start"
+
+  frontend-main:
+    build: ./frontend-main
+    container_name: delivery_frontend_main
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - delivery_network
+
+  frontend-secondary:
+    build: ./frontend-secondary
+    container_name: delivery_frontend_secondary
+    ports:
+      - "5174:5174"
+    depends_on:
+      - backend
+    networks:
+      - delivery_network
 
 networks:
   delivery_network:

@@ -5,10 +5,10 @@ const prisma = new PrismaClient();
 
 async function main() {
     // 1. Clean existing data (optional, but good for resetting)
-    // await prisma.orderItem.deleteMany();
-    // await prisma.order.deleteMany();
-    // await prisma.product.deleteMany();
-    // await prisma.user.deleteMany();
+    await prisma.orderItem.deleteMany();
+    await prisma.order.deleteMany();
+    await prisma.product.deleteMany();
+    await prisma.user.deleteMany();
 
     // 2. Create Default User
     const hashedPassword = await bcrypt.hash('123456', 10);
@@ -38,11 +38,11 @@ async function main() {
             category: 'Hamburguesas'
         },
         {
-            name: 'Hamburguesa de Pollo Crispy',
-            description: 'Pechuga de pollo empanizada, lechuga, tomate y mayonesa.',
-            price: 8.00,
-            imageUrl: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=500&q=60',
-            stock: 40,
+            name: 'Hamburguesa BBQ Bacon',
+            description: 'Carne de res a la parrilla, tocino crujiente, queso cheddar y salsa BBQ ahumada.',
+            price: 10.50,
+            imageUrl: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=500&q=60',
+            stock: 35,
             category: 'Hamburguesas'
         },
         // Pizzas
@@ -95,6 +95,15 @@ async function main() {
             imageUrl: 'https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=500&q=60',
             stock: 25,
             category: 'Postres'
+        },
+        // Tacos
+        {
+            name: 'Tacos al Pastor (Orden de 5)',
+            description: 'Tortillas de maíz con carne de cerdo adobada, piña, cilantro y cebolla.',
+            price: 12.00,
+            imageUrl: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=500&q=60',
+            stock: 60,
+            category: 'Tacos'
         }
     ];
 
