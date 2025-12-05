@@ -1,8 +1,6 @@
 # 🚀 DeliveryApp FullStack System
 ### Una experiencia de delivery moderna, inmersiva y totalmente dockerizada.
 
-![Delivery App Banner](https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80)
-
 Este proyecto representa un sistema integral de gestión de pedidos y delivery de última generación. Combina una arquitectura backend robusta con interfaces de usuario (Frontends) diseñadas bajo la estética **Glassmorphism** y **Magic UI**, ofreciendo una experiencia visual premium y fluida.
 
 ---
