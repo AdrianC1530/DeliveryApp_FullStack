@@ -5,11 +5,11 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// --- Custom Icons using Emojis (No external images required) ---
+// --- Custom Icons using Emojis ---
 const createEmojiIcon = (emoji: string) => {
     return L.divIcon({
         className: 'custom-emoji-icon',
-        html: `<div style="font-size: 30px; line-height: 1; text-align: center;">${emoji}</div>`,
+        html: `<div style="font-size: 30px; line-height: 1; text-align: center; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">${emoji}</div>`,
         iconSize: [30, 30],
         iconAnchor: [15, 15],
         popupAnchor: [0, -15]
@@ -39,9 +39,8 @@ const MapUpdater = ({ center, markers }: { center: [number, number], markers: [n
     useEffect(() => {
         if (markers.length > 0) {
             const bounds = L.latLngBounds(markers.map(m => L.latLng(m[0], m[1])));
-            // Add restaurant to bounds
             bounds.extend(center);
-            map.fitBounds(bounds, { padding: [50, 50] });
+            map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
         } else {
             map.setView(center, 14);
         }
@@ -55,7 +54,7 @@ const OrderTracking = () => {
     const [driverPos, setDriverPos] = useState<[number, number] | null>(null);
     const [isUpdating, setIsUpdating] = useState(false);
 
-    // Fixed Restaurant Location (Ibarra Center approx)
+    // Fixed Restaurant Location (Ibarra Center)
     const restaurantPos: [number, number] = [0.3517, -78.1223];
 
     const fetchOrders = async () => {
@@ -69,40 +68,41 @@ const OrderTracking = () => {
 
     useEffect(() => {
         fetchOrders();
-        // Poll for updates every 10 seconds
-        const pollInterval = setInterval(fetchOrders, 10000);
+        const pollInterval = setInterval(fetchOrders, 5000); // Poll faster (5s)
         return () => clearInterval(pollInterval);
     }, []);
 
-    // Simulate Driver Movement for the latest active order
+    // Simulate Driver Movement based on Time
     useEffect(() => {
         if (orders.length === 0) return;
         const latestOrder = orders[0];
 
-        // Only simulate if order is ON_WAY or PENDING/PREPARING (to show movement)
-        // And if we have valid coordinates
         if (latestOrder.status !== 'DELIVERED' && latestOrder.latitude && latestOrder.longitude) {
-            // Simple simulation: Move driver from Restaurant to User based on time
-            // In a real app, this would come from the backend
-
-            let progress = 0;
             const interval = setInterval(() => {
-                progress += 0.005; // Slower, smoother movement
-                if (progress > 1) progress = 1;
+                // Calculate progress based on time elapsed since order creation
+                // Total delivery time simulation: 60 seconds (fast for demo)
+                const createdTime = new Date(latestOrder.createdAt).getTime();
+                const now = Date.now();
+                const elapsed = now - createdTime;
+                const duration = 60 * 1000; // 60 seconds
+
+                let progress = elapsed / duration;
+
+                // Clamp progress
+                if (progress < 0) progress = 0;
+                if (progress > 0.95) progress = 0.95; // Don't fully arrive until confirmed
 
                 const newLat = restaurantPos[0] + (latestOrder.latitude - restaurantPos[0]) * progress;
                 const newLng = restaurantPos[1] + (latestOrder.longitude - restaurantPos[1]) * progress;
 
                 setDriverPos([newLat, newLng]);
-
-                if (progress >= 1) clearInterval(interval);
-            }, 50);
+            }, 100); // Update smooth
 
             return () => clearInterval(interval);
         } else if (latestOrder.status === 'DELIVERED') {
             setDriverPos(null);
         }
-    }, [orders]); // Re-run when orders list updates
+    }, [orders]);
 
     const handleConfirmDelivery = async (orderId: number) => {
         if (!window.confirm('¿Confirmas que has recibido el pedido y realizado el pago?')) return;
@@ -114,7 +114,7 @@ const OrderTracking = () => {
             await fetchOrders();
         } catch (error) {
             console.error('Error updating order', error);
-            alert('Hubo un error al confirmar la entrega. Intenta de nuevo.');
+            alert('Error al confirmar. Asegúrate de que el backend esté actualizado (npm run build).');
         } finally {
             setIsUpdating(false);
         }
@@ -130,7 +130,6 @@ const OrderTracking = () => {
         }
     };
 
-    // Determine active markers for the map
     const activeOrder = orders[0];
     const userLocation: [number, number] | null = (activeOrder && activeOrder.latitude && activeOrder.longitude)
         ? [activeOrder.latitude, activeOrder.longitude]
