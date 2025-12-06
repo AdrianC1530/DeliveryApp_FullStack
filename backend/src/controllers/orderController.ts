@@ -8,7 +8,7 @@ interface AuthRequest extends Request {
 }
 
 export const createOrder = async (req: AuthRequest, res: Response) => {
-    const { items, total } = req.body; // items: { productId, quantity, price }[]
+    const { items, total, address, latitude, longitude } = req.body; // items: { productId, quantity, price }[]
     const userId = req.user.userId;
 
     try {
@@ -16,6 +16,9 @@ export const createOrder = async (req: AuthRequest, res: Response) => {
             data: {
                 userId,
                 total: Number(total),
+                address: address || '',
+                latitude: Number(latitude) || 0,
+                longitude: Number(longitude) || 0,
                 items: {
                     create: items.map((item: any) => ({
                         productId: item.productId,
@@ -28,7 +31,7 @@ export const createOrder = async (req: AuthRequest, res: Response) => {
         });
         res.status(201).json(order);
     } catch (error) {
-        res.status(500).json({ message: 'Error al crear la orden', error });
+        res.status(500).json({ message: 'Error creating order', error });
     }
 };
 
@@ -42,7 +45,7 @@ export const getUserOrders = async (req: AuthRequest, res: Response) => {
         });
         res.json(orders);
     } catch (error) {
-        res.status(500).json({ message: 'Error al obtener las órdenes', error });
+        res.status(500).json({ message: 'Error fetching orders', error });
     }
 };
 
@@ -56,16 +59,30 @@ export const getOrderById = async (req: AuthRequest, res: Response) => {
         });
 
         if (!order) {
-            return res.status(404).json({ message: 'Orden no encontrada' });
+            return res.status(404).json({ message: 'Order not found' });
         }
 
         // Check if order belongs to user or user is admin (logic simplified here)
         if (order.userId !== userId && req.user.role !== 'ADMIN') {
-            return res.status(403).json({ message: 'Acceso denegado' });
+            return res.status(403).json({ message: 'Access denied' });
         }
 
         res.json(order);
     } catch (error) {
-        res.status(500).json({ message: 'Error al obtener la orden', error });
+        res.status(500).json({ message: 'Error fetching order', error });
+    }
+};
+
+export const updateOrderStatus = async (req: AuthRequest, res: Response) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    try {
+        const order = await prisma.order.update({
+            where: { id: Number(id) },
+            data: { status },
+        });
+        res.json(order);
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating order status', error });
     }
 };
