@@ -66,6 +66,13 @@ Este proyecto ha sido construido utilizando los estándares más altos de la ind
     - **Panel Secundario**: [http://localhost:5174](http://localhost:5174)
     - **API Backend**: [http://localhost:3000](http://localhost:3000)
 
+### 🔐 Credenciales de Acceso (Demo)
+
+| Rol         | Email              | Contraseña |
+| :---------- | :----------------- | :--------- |
+| **Cliente** | `cliente@demo.com` | `123456`   |
+| **Admin**   | `admin@demo.com`   | `123456`   |
+
 ---
 
 ## 📄 Estructura del Proyecto
