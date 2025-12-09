@@ -27,6 +27,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                             {[
                                 { path: '/catalog', label: 'Menú' },
                                 { path: '/orders', label: 'Órdenes' },
+                                ...(user?.role === 'ADMIN' ? [{ path: '/admin', label: 'Panel Admin' }] : []),
                             ].map((link) => (
                                 <Link
                                     key={link.path}

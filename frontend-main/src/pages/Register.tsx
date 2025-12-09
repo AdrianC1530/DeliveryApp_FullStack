@@ -4,7 +4,8 @@ import api from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const Login = () => {
+const Register = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { login } = useAuth();
@@ -17,11 +18,11 @@ const Login = () => {
         setIsLoading(true);
         setError('');
         try {
-            const response = await api.post('/auth/login', { email, password });
+            const response = await api.post('/auth/register', { name, email, password });
             login(response.data.token, response.data.user);
             navigate('/catalog');
-        } catch (err) {
-            setError('Credenciales inválidas. Por favor intenta de nuevo.');
+        } catch (err: any) {
+            setError(err.response?.data?.message || 'Error al registrarse. Intenta de nuevo.');
         } finally {
             setIsLoading(false);
         }
@@ -31,8 +32,8 @@ const Login = () => {
         <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-background">
             {/* Animated Background Gradients */}
             <div className="absolute inset-0 w-full h-full">
-                <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary/30 rounded-full blur-[100px] animate-pulse-slow"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-secondary/30 rounded-full blur-[100px] animate-pulse-slow delay-1000"></div>
+                <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/30 rounded-full blur-[100px] animate-pulse-slow"></div>
+                <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-secondary/30 rounded-full blur-[100px] animate-pulse-slow delay-1000"></div>
             </div>
 
             <motion.div
@@ -49,12 +50,12 @@ const Login = () => {
                             transition={{ delay: 0.2 }}
                             className="inline-block mb-4"
                         >
-                            <span className="text-4xl">🚀</span>
+                            <span className="text-4xl">📝</span>
                         </motion.div>
                         <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">
-                            Bienvenido
+                            Crear Cuenta
                         </h1>
-                        <p className="text-muted text-sm">Inicia sesión para acceder al panel de delivery</p>
+                        <p className="text-muted text-sm">Únete para pedir tu comida favorita</p>
                     </div>
 
                     {error && (
@@ -68,6 +69,17 @@ const Login = () => {
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-300 ml-1">Nombre Completo</label>
+                            <input
+                                type="text"
+                                className="w-full bg-surface/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-200"
+                                placeholder="Juan Pérez"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                        </div>
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-gray-300 ml-1">Correo Electrónico</label>
                             <input
@@ -100,15 +112,7 @@ const Login = () => {
                         >
                             <div className="relative bg-surface/50 backdrop-blur-sm rounded-xl px-4 py-3 transition-all duration-200 group-hover:bg-opacity-0">
                                 <span className="relative font-semibold text-white flex items-center justify-center gap-2">
-                                    {isLoading ? (
-                                        <>
-                                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                            </svg>
-                                            Iniciando...
-                                        </>
-                                    ) : 'Iniciar Sesión'}
+                                    {isLoading ? 'Registrando...' : 'Registrarse'}
                                 </span>
                             </div>
                         </motion.button>
@@ -116,7 +120,7 @@ const Login = () => {
 
                     <div className="mt-8 text-center">
                         <p className="text-sm text-muted">
-                            ¿No tienes una cuenta? <Link to="/register" className="text-primary hover:text-primary-hover font-medium transition-colors">Regístrate aquí</Link>
+                            ¿Ya tienes una cuenta? <Link to="/login" className="text-primary hover:text-primary-hover font-medium transition-colors">Iniciar Sesión</Link>
                         </p>
                     </div>
                 </div>
@@ -125,4 +129,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;

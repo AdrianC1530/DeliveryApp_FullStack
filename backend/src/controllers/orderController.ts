@@ -49,6 +49,23 @@ export const getUserOrders = async (req: AuthRequest, res: Response) => {
     }
 };
 
+export const getAllOrders = async (req: AuthRequest, res: Response) => {
+    // Check if user is admin
+    if (req.user.role !== 'ADMIN') {
+        return res.status(403).json({ message: 'Acceso denegado. Se requiere rol de administrador.' });
+    }
+
+    try {
+        const orders = await prisma.order.findMany({
+            include: { items: { include: { product: true } }, user: { select: { name: true, email: true } } },
+            orderBy: { createdAt: 'desc' },
+        });
+        res.json(orders);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener todas las órdenes', error });
+    }
+};
+
 export const getOrderById = async (req: AuthRequest, res: Response) => {
     const { id } = req.params;
     const userId = req.user.userId;
@@ -62,7 +79,7 @@ export const getOrderById = async (req: AuthRequest, res: Response) => {
             return res.status(404).json({ message: 'Order not found' });
         }
 
-        // Check if order belongs to user or user is admin (logic simplified here)
+        // Check if order belongs to user or user is admin
         if (order.userId !== userId && req.user.role !== 'ADMIN') {
             return res.status(403).json({ message: 'Access denied' });
         }
@@ -76,6 +93,12 @@ export const getOrderById = async (req: AuthRequest, res: Response) => {
 export const updateOrderStatus = async (req: AuthRequest, res: Response) => {
     const { id } = req.params;
     const { status } = req.body;
+
+    // Check if user is admin
+    if (req.user.role !== 'ADMIN') {
+        return res.status(403).json({ message: 'Acceso denegado. Se requiere rol de administrador.' });
+    }
+
     try {
         const order = await prisma.order.update({
             where: { id: Number(id) },

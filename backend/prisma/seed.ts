@@ -26,6 +26,19 @@ async function main() {
 
     console.log('User created:', user.email);
 
+    // 2.1 Create Admin User
+    const adminUser = await prisma.user.upsert({
+        where: { email: 'admin@demo.com' },
+        update: {},
+        create: {
+            email: 'admin@demo.com',
+            name: 'Administrador',
+            password: hashedPassword,
+            role: 'ADMIN',
+        },
+    });
+    console.log('Admin created:', adminUser.email);
+
     // 3. Create Products
     const products = [
         // Hamburguesas
