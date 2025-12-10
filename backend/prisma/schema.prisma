@@ -11,7 +11,7 @@ model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
-  name      String?
+  name      String?l
   role      String   @default("USER") // USER, ADMIN
   orders    Order[]
   createdAt DateTime @default(now())
@@ -52,4 +52,4 @@ model OrderItem {
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
   price     Float   // Price at the time of purchase
-}
+} 

@@ -93,18 +93,31 @@ export const getOrderById = async (req: AuthRequest, res: Response) => {
 export const updateOrderStatus = async (req: AuthRequest, res: Response) => {
     const { id } = req.params;
     const { status } = req.body;
-
-    // Check if user is admin
-    if (req.user.role !== 'ADMIN') {
-        return res.status(403).json({ message: 'Acceso denegado. Se requiere rol de administrador.' });
-    }
+    const userId = req.user.userId;
+    const userRole = req.user.role;
 
     try {
-        const order = await prisma.order.update({
+        const order = await prisma.order.findUnique({ where: { id: Number(id) } });
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        // Permission check:
+        // 1. Admin can update anything.
+        // 2. User can ONLY update their own order to 'DELIVERED' (Confirm Delivery).
+        const isOwner = order.userId === userId;
+        const isConfirmingDelivery = status === 'DELIVERED';
+
+        if (userRole !== 'ADMIN' && (!isOwner || !isConfirmingDelivery)) {
+            return res.status(403).json({ message: 'Acceso denegado.' });
+        }
+
+        const updatedOrder = await prisma.order.update({
             where: { id: Number(id) },
             data: { status },
         });
-        res.json(order);
+        res.json(updatedOrder);
     } catch (error) {
         res.status(500).json({ message: 'Error updating order status', error });
     }
